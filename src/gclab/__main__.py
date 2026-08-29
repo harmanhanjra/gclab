@@ -18,7 +18,7 @@ def main() -> int:
     verify_parser.add_argument("--seed", type=int, default=42, help="Random seed")
     verify_parser.add_argument("--trials", type=int, default=100, help="Number of trials")
 
-    demo_parser = subparsers.add_parser("demo", help="Run a live demo")
+    subparsers.add_parser("demo", help="Run a live demo")
 
     args = parser.parse_args()
 
@@ -58,7 +58,7 @@ def run_demo() -> int:
     print(f"Live after GC: {graph.live_count()}")
 
     # Create an unreachable object
-    orphan = graph.alloc("leaf")
+    graph.alloc("leaf")
     print("Created orphan object")
     print(f"Live before GC: {graph.live_count()}")
 

@@ -151,10 +151,7 @@ def mutation_test(graph: ObjectGraph, gc: TracingGC, roots: list[int]) -> bool:
     if obj2.obj_id not in gc.marked:
         return False
 
-    if graph.objects[obj2.obj_id].collected:
-        return False
-
-    return True
+    return not graph.objects[obj2.obj_id].collected
 
 
 def run_verify(seed: int = 42, trials: int = 100) -> bool:
