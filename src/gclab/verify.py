@@ -23,14 +23,14 @@ def _build_graph_for_test(seed: int, size: int = 50) -> tuple[ObjectGraph, Traci
         obj = graph.alloc("container")
         objects.append(obj)
 
-    # Connect objects
-    for i, obj in enumerate(objects[1:], 1):
+    # Connect objects (only among first `size` objects, orphans come after)
+    for i, obj in enumerate(objects[1:size], 1):
         # Each object has 1-3 strong pointers to later objects
-        available = len(objects) - i
+        available = size - i
         if available <= 0:
             continue
         num_ptrs = rng.randint(1, min(3, available))
-        targets = rng.sample(range(i + 1, len(objects)), min(num_ptrs, available))
+        targets = rng.sample(range(i + 1, size), min(num_ptrs, available))
         for t in targets:
             graph.add_strong(obj.obj_id, objects[t].obj_id)
 
