@@ -32,7 +32,10 @@ def _build_graph_for_test(seed: int, size: int = 50) -> tuple[ObjectGraph, Traci
         num_ptrs = rng.randint(1, min(3, available))
         if num_ptrs <= 0:
             continue
-        targets = rng.sample(range(i + 1, size), min(num_ptrs, available))
+        target_range = range(i + 1, size)
+        if len(target_range) <= 0:
+            continue
+        targets = rng.sample(target_range, min(num_ptrs, len(target_range)))
         for t in targets:
             graph.add_strong(obj.obj_id, objects[t].obj_id)
 
