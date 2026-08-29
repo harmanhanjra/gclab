@@ -1,14 +1,12 @@
 """Tests for GC verification."""
-import random
 import pytest
 
 from gclab.gc import TracingGC, WriteBarrier
-from gclab.heap import ObjectGraph, Pointer, InvalidPointerError
+from gclab.heap import ObjectGraph, InvalidPointerError
 from gclab.verify import (
     property_reachability,
     property_no_dangles,
     property_cycle_collection,
-    property_live_objects_marked,
     mutation_test,
     run_verify,
 )

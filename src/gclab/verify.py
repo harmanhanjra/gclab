@@ -2,10 +2,9 @@
 from __future__ import annotations
 
 import random
-from typing import Optional
 
 from .gc import TracingGC
-from .heap import ObjectGraph, Pointer
+from .heap import ObjectGraph
 
 
 def _build_graph_for_test(seed: int, size: int = 50) -> tuple[ObjectGraph, TracingGC, list[int]]:
@@ -28,9 +27,9 @@ def _build_graph_for_test(seed: int, size: int = 50) -> tuple[ObjectGraph, Traci
     for i, obj in enumerate(objects[1:], 1):
         # Each object has 1-3 strong pointers to later objects
         available = len(objects) - i
-        num_ptrs = rng.randint(1, min(3, available))
         if available <= 0:
             continue
+        num_ptrs = rng.randint(1, min(3, available))
         targets = rng.sample(range(i + 1, len(objects)), min(num_ptrs, available))
         for t in targets:
             graph.add_strong(obj.obj_id, objects[t].obj_id)

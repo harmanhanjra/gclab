@@ -5,7 +5,7 @@ import logging
 from collections import deque
 from typing import Optional
 
-from .heap import HeapObject, ObjectGraph, Pointer
+from .heap import ObjectGraph
 
 logger = logging.getLogger(__name__)
 

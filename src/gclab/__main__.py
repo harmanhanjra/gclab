@@ -50,7 +50,7 @@ def run_demo() -> int:
     graph.add_strong(obj1.obj_id, obj2.obj_id)
     graph.add_strong(obj2.obj_id, leaf.obj_id)
 
-    print(f"Created 4 objects, all reachable from root")
+    print("Created 4 objects, all reachable from root")
     print(f"Live before GC: {graph.live_count()}")
 
     # Collect garbage (none should be collected)
@@ -59,7 +59,7 @@ def run_demo() -> int:
 
     # Create an unreachable object
     orphan = graph.alloc("leaf")
-    print(f"Created orphan object")
+    print("Created orphan object")
     print(f"Live before GC: {graph.live_count()}")
 
     # Collect garbage (orphan should be collected)
@@ -72,7 +72,7 @@ def run_demo() -> int:
     graph.add_weak(weak1.obj_id, weak2.obj_id)
     graph.add_weak(weak2.obj_id, weak1.obj_id)
 
-    print(f"Created weakref cycle")
+    print("Created weakref cycle")
     print(f"Live before GC: {graph.live_count()}")
 
     # Collect garbage (cycle should be collected)
