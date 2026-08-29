@@ -27,8 +27,11 @@ def _build_graph_for_test(seed: int, size: int = 50) -> tuple[ObjectGraph, Traci
     # Connect objects
     for i, obj in enumerate(objects[1:], 1):
         # Each object has 1-3 strong pointers to later objects
-        num_ptrs = rng.randint(1, min(3, len(objects) - i))
-        targets = rng.sample(range(i + 1, len(objects)), num_ptrs)
+        available = len(objects) - i
+        num_ptrs = rng.randint(1, min(3, available))
+        if available <= 0:
+            continue
+        targets = rng.sample(range(i + 1, len(objects)), min(num_ptrs, available))
         for t in targets:
             graph.add_strong(obj.obj_id, objects[t].obj_id)
 
@@ -84,7 +87,7 @@ def property_no_dangles(graph: ObjectGraph, gc: TracingGC) -> bool:
     """
     P2: All pointers from live objects point to live objects.
     """
-    for obj_id, obj in graph.objects.items():
+    for _obj_id, obj in graph.objects.items():
         if obj.collected:
             continue
         for ptr in obj.strong_ptrs:

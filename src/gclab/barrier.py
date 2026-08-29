@@ -1,5 +1,4 @@
 """Write barrier for the GC."""
-from .config import GC_WRITE_BUFFER_SIZE
 from .heap import ObjectGraph
 
 

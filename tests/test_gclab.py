@@ -137,6 +137,8 @@ class TestTracingGC:
         graph = ObjectGraph()
         barrier = WriteBarrier()
         gc = TracingGC(graph, barrier)
+        from gclab.barrier import install_barrier
+        install_barrier(graph, gc)
         root = graph.alloc("root")
         obj = graph.alloc("container")
         graph.add_strong(root.obj_id, obj.obj_id)
